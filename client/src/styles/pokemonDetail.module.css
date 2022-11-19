@@ -1,0 +1,169 @@
+    .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url("../media/1.jpeg");
+        background-size:cover;
+        width: 100%;
+        min-height: 100vh;
+        background-position:center;
+        
+    }
+    
+    .img{
+        display: flex;
+        justify-content: center;
+        margin-left: 42px;
+    }
+ 
+    .e{
+        height: 60px;
+        width: 60px;
+        margin-bottom: -10px;
+    }
+
+   /* Comienza la animacion */
+    .card{
+        position: relative;
+        width: 700px;
+        height: 400px;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        transition: 0.5s;
+    }
+
+    .card .circle{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    }
+
+    .card .circle::before{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg');
+        background-size: 280px;
+        background-position: center;
+        background-repeat: no-repeat;
+        clip-path: circle(120px at center);
+        transition: 0.8s;
+      }
+    
+    .card:hover .circle:before{
+        transform: translateX(-500px)rotate(400deg)translateY(-200px);
+        background-image: url("../media/pokebola.png");
+        background-size: 400px;
+        clip-path: circle(400px at center);
+        width: 1000px;
+        z-index: 500;
+      }
+
+    .card img{
+        position: relative;
+        z-index: 1;
+        left: 34%;
+        height: 300px;
+        width: auto;
+        pointer-events: none;
+        transition: 0.5s;
+        filter: drop-shadow(-2px 4px 15px rgb(0, 0, 0));
+        animation: animar 2s infinite ease;
+      }
+      
+      @keyframes animar {
+        25% {
+          transform: translateY(10px);
+        }
+        50%{
+          transform: translateY(0px);
+        }
+        75%{
+          transform: translateY(10px);
+        }
+      }
+      
+    .card:hover img {
+        left:50%;
+        height: 500px; 
+      }
+     
+    .card .content{
+        position: absolute;
+        z-index: 100;
+        width: 50%;
+        left: 20%;
+        padding: 20px 20px 20px 40px;
+        transition: 0.5s;
+        opacity: 0;
+        visibility: hidden;
+        width: 400px;
+        text-align: center;
+    
+      }
+    
+    .card:hover .content{
+        left: 0;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* termina la animacion     */
+
+    
+    .card .content h2{
+        color:black;
+        font-size: 3em;
+        text-transform: uppercase;
+        line-height: 1em;
+        -webkit-text-stroke: #fff 1px ;
+        transform: translate(-100px,350px);
+       
+      }
+
+    .statsContainer{
+        color:black;
+        display:flex;
+        justify-content: center;
+        flex-direction: row;
+        font-size: 1.3em;
+        font-weight: 600;
+        -webkit-text-stroke: #fff 0.5px ;
+    
+    }
+
+    .statsContainer ul{
+        margin-right: 30px;
+        list-style: none;
+    }
+
+    .type{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 1.5rem;
+    } 
+
+   
+    .btn{
+        padding: 10px;
+        border-radius: 10px;
+        left: 20px;
+        bottom: 20px;
+        position: absolute;
+        cursor: pointer;
+    }
+
+    .btn:hover{
+        color: white;
+        background-color: transparent;
+        transition: 0.5s;
+    }
+
+   

@@ -1,0 +1,133 @@
+.cardContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.home{
+    background-image: url("../media/2.jfif") ;
+    background-size:cover;
+    width: 100%;
+    min-height: 100vh;
+    background-position:center;
+    
+    
+}
+
+.home h1{
+    font-family: 'Pokemon Solid', sans-serif;
+    text-shadow: 3px 5px 5px blue;
+    -webkit-text-stroke: 1px blue;
+    color: yellow;
+    font-size: 50px;
+    margin: 0;
+    padding: 0;
+}
+
+.gif{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
+}
+
+.gifImg{
+    position: relative;
+    right: 40px;
+}
+
+.btn{
+    border-radius: 50%;
+    margin-top: 2.2px;
+    width: 54px;
+    height: 54px;
+    display: flex;
+    background-image: url("../media/pokeball.png");
+    background-size: cover;
+    border:none;
+    cursor:pointer;
+    margin-left:10px;
+    position: absolute;
+    z-index: 100;
+}
+
+.btn:hover{
+    animation: rotation 0.5s infinite linear;
+}
+@keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
+
+
+.filterContainer{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    height: 60px;
+    padding: 10px 0px 10px 0px;
+    flex-direction: row;
+    text-shadow: 1px 0px 0.1px;
+    background-color: rgba(255, 255, 255, 0.178);
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    position:relative;
+    z-index: 1;
+    border-radius: 15px;
+    
+   
+    
+}
+
+.filterContainer select{
+    display: flex;
+    margin: auto;
+    margin-left: 40px;
+    border-radius: 6px;
+    border: none;
+    color:rgb(248, 70, 0);
+    background-color: rgb(248, 169, 96);
+    font-family:"Dancing Script";
+    font-style: italic;
+    font-size: medium;
+    cursor:pointer;
+}
+
+.filterContainer select:hover{
+    color: rgb(243, 148, 60);
+    background-color:rgb(248, 70, 0);
+}
+
+.name{
+    display: flex;
+    
+
+}
+
+.stat{
+    display: flex;
+    
+}
+
+.order{
+    display: flex;
+    
+}
+
+.types{
+    display: flex;
+    
+}
+
+.created{
+    display: flex;
+    
+}
