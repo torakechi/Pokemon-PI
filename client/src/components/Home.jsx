@@ -147,7 +147,7 @@ export default function Home () {
                         id={e.id}
                         name={e.name}
                         sprite={e.sprite}
-                        type={e.types}
+                        type={e.type}
                     />
                 )
                })} 
