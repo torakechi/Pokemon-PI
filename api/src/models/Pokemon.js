@@ -61,6 +61,13 @@ module.exports = (sequelize) => {
       defaultValue: '50'
     },
 
+    type1: {
+      type: DataTypes.STRING
+    },
+    type2: {
+      type: DataTypes.STRING
+    },
+
     createdInDb: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

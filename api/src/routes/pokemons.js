@@ -58,6 +58,8 @@ router.post("/", async (req,res)=>{
         speed,
         height,
         weight,
+        type1: types[0],
+        type2: types[1],
         createdInDb
     });
 
