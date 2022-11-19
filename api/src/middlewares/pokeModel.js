@@ -140,7 +140,7 @@ const getPokemonDb = async () =>{
 const getAll = async () =>{
     const apiData = await getPokemonApi();
     const dbData = await getPokemonDb();
-    const totalData = [...apiData, ...dbData];
+    const totalData = apiData.concat(dbData);
     return totalData;
 }
 
