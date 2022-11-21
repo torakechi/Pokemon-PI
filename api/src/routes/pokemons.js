@@ -19,6 +19,22 @@ router.get("/:id", async (req, res)=>{
 }
 });
 
+// router.get('/:id', async (req,res) => {
+
+//     const { id } = req.params
+//     try {        
+//         let allPokemon = await getAll()
+//         let findPokemon = await allPokemon.find(e => e.id == id)
+            
+//         Object.keys(findPokemon).length ? 
+//         res.status(200).json(findPokemon) :
+//         res.status(404).send(`No existe ningun Pokemon con el id:${id}`)
+//     } catch (error) {
+//         console.log(error)
+//     }
+        
+// })
+
 // /pokemons?name
  
 router.get("/", async (req, res, next)=>{

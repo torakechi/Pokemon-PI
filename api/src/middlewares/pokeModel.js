@@ -3,8 +3,10 @@ const axios = require("axios");
 
 const {Pokemon, Type} = require ("../db");
 let pokeTypesObj = [];
+// let pokemonsObj = [];
+
 const getPokemonApi = async () =>{
-let pokemonsObj = [];
+    let pokemonObj = [];
 
 let pokemons = await axios ('https://pokeapi.co/api/v2/pokemon?limit=40'); // obtenemos datos
 
@@ -38,9 +40,9 @@ for(let i = 0; i<urls.length; i++){
             type: info.types.map(e=> e.type.name)
     };
     
-    pokemonsObj.push(pokemon);
+    pokemonObj.push(pokemon);
 }
-return pokemonsObj;
+return pokemonObj;
 };
 
 
@@ -64,8 +66,8 @@ const pokeSearch = async (name) => {
     return infoPokemon;
 
     }catch(error){
-        return new TypeError ("No se encontro el Pokemon");
-    }
+    return new TypeError ("No se encontro el Pokemon");
+}
 };
 
 const pokeId = async (id) => {
@@ -108,16 +110,13 @@ const listTypes = async () =>{
 
 const getPokemonDb = async () =>{
       let pokemonDb = await Pokemon.findAll({
-        include:{
-            model: Type,
-            attibutes: ["name"],
-            through: {
-                attributes: [],
-            }
-
-        }, raw:true
-})
+        include:
+            Type
+        }, 
+)
+   
    pokemonDb = pokemonDb.map(e =>{
+    e = e.dataValues;
     return {
         id : e.id,
         name : e.name,
@@ -130,18 +129,20 @@ const getPokemonDb = async () =>{
         speed: e.speed,
         height: e.height,
         weight: e.weight,
-        type: [e.type1, e.type2],
+        type: [e.types[0].name, e.types[1].name],
         createdInDb: true,
     }
    }) 
+   console.log(pokemonDb)
    return pokemonDb;
 }
 
 const getAll = async () =>{
     const apiData = await getPokemonApi();
     const dbData = await getPokemonDb();
-    const totalData = apiData.concat(dbData);
-    return totalData;
+    const infoTotal = [...apiData, ...dbData]
+
+    return infoTotal
 }
 
 module.exports = {
