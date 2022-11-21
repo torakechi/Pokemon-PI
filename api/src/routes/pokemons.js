@@ -42,6 +42,7 @@ router.get("/", async (req, res, next)=>{
     if(name){                  
         try{
             let pokemon = await pokeSearch (name);
+            console.log(pokemon)
             return res.json(pokemon);
         }catch(error){
             return res.status(404).json(error.message);

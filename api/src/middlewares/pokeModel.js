@@ -49,6 +49,7 @@ return pokemonObj;
 const pokeSearch = async (name) => {
     try{
         let search = await axios (`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`)
+        
         let infoPokemon = [{
             id : search.data.id,
             name : search.data.name,
@@ -66,7 +67,27 @@ const pokeSearch = async (name) => {
     return infoPokemon;
 
     }catch(error){
-    return new TypeError ("No se encontro el Pokemon");
+    let searchDb = await Pokemon.findAll({
+        include:
+            Type
+        }, 
+);
+    console.log(searchDb)
+    if (searchDb.length === 0) return new Error ("No se encontro el Pokemon");
+        // let infoPokemon = [{
+        //     id : searchDb.id,
+        //     name : searchDb.name,
+        //     sprite : searchDb.sprite,
+        //     hp: searchDb.hp,
+        //     attack: searchDb.attack,
+        //     defense: searchDb.defense,
+        //     specialAttack: searchDb.specialAttack,
+        //     specialDefense:searchDb.specialDefense,
+        //     speed: searchDb.speed,
+        //     height: searchDb.height,
+        //     weight: searchDb.weight,
+        //     type: searchDb.types.map(e=> e.type.name)}]
+    
 }
 };
 
@@ -133,7 +154,7 @@ const getPokemonDb = async () =>{
         createdInDb: true,
     }
    }) 
-   console.log(pokemonDb)
+   
    return pokemonDb;
 }
 
