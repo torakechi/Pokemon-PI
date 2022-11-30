@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import s from "../styles/pokemonCreate.module.css"
 
 
+
+
 export default function PokemonCreate() {
     const dispatch = useDispatch();
     const types = useSelector((state)=> state.types);
@@ -40,23 +42,23 @@ export default function PokemonCreate() {
         if (!noEmpty.test(input.name) || !validateName.test(input.name) || input.name.length < 3) {
         errors.name = "Name required. Only string of more than two characters and without numbers";
         }
-        if (!validateNum.test(input.hp) || parseInt(input.hp) < 1 || parseInt(input.hp) > 100) {
-            errors.hp = "Number required. Higher than 0. Lesser than 100";
+        if (!validateNum.test(input.hp) || parseInt(input.hp) < 1 || parseInt(input.hp) >= 200) {
+            errors.hp = "Number required. Higher than 0. Lesser than 200";
         }
-        if (!validateNum.test(input.attack) || parseInt(input.attack) < 1 || parseInt(input.attack) > 100) {
-            errors.attack = "Number required. Higher than 0. Lesser than 100";
+        if (!validateNum.test(input.attack) || parseInt(input.attack) < 1 || parseInt(input.attack) >= 200) {
+            errors.attack = "Number required. Higher than 0. Lesser than 200";
         }
-        if (!validateNum.test(input.defense) || parseInt(input.defense) < 1 || parseInt(input.defense) > 100) {
-            errors.defense = "Number required. Higher than 0. Lesser than 100";
+        if (!validateNum.test(input.defense) || parseInt(input.defense) < 1 || parseInt(input.defense) >= 200) {
+            errors.defense = "Number required. Higher than 0. Lesser than 200";
         }
-        if (!validateNum.test(input.specialAttack) || parseInt(input.specialAttack) < 1 || parseInt(input.specialAttack) > 100) {
-            errors.specialAttack = "Number required. Higher than 0. Lesser than 100";
+        if (!validateNum.test(input.specialAttack) || parseInt(input.specialAttack) < 1 || parseInt(input.specialAttack) >= 200) {
+            errors.specialAttack = "Number required. Higher than 0. Lesser than 200";
         }
-        if (!validateNum.test(input.specialDefense) || parseInt(input.specialDefense) < 1 || parseInt(input.specialDefense) > 100) {
-            errors.specialDefense = "Number required. Higher than 0. Lesser than 100";
+        if (!validateNum.test(input.specialDefense) || parseInt(input.specialDefense) < 1 || parseInt(input.specialDefense) >= 200) {
+            errors.specialDefense = "Number required. Higher than 0. Lesser than 200";
         }
-        if (!validateNum.test(input.speed) || parseInt(input.speed) < 1 || parseInt(input.speed) > 100) {
-            errors.speed = "Number required. Higher than 0. Lesser than 100";
+        if (!validateNum.test(input.speed) || parseInt(input.speed) < 1 || parseInt(input.speed) >=200) {
+            errors.speed = "Number required. Higher than 0. Lesser than 200";
         }
         if (!validateNum.test(input.height) || parseInt(input.height) < 1) {
             errors.height = "Number required. Higher than 0.";
@@ -67,11 +69,15 @@ export default function PokemonCreate() {
         if (!validateUrl.test(input.sprite)) {
         errors.sprite = "URL required";
         }
+        if (!input.types.length) errors.types = "Choose at least one type";
+        if (input.types.length>2) errors.types = "No more than two types allowed";
 
         return errors;
     };
     
-   function handleChange(e){  //maneja cada vez q se modifiquen los inputs
+   function handleChange(e, inputType){  //maneja cada vez q se modifiquen los inputs
+    if( inputType === "checkbox") handleCheckbox(e) 
+    else{
         setInput({
             ...input,
             [e.target.name] : e.target.value
@@ -80,20 +86,33 @@ export default function PokemonCreate() {
         setErrors(validate({
             ...input,
             [e.target.name]: e.target.value
-        }))         
-    }
+        })) 
+     } 
+          
+ }
 
-    const handleSelect = e => {
-        if (input.types.length < 2) {
+    function handleCheckbox(e){ 
+        if (e.target.checked) {
             setInput({
                 ...input,
-                types: [...input.types, e.target.value]
-            })
-            e.target.value = 'Select type';
-        } else {
-            alert('Two types of pokemon at most')
+                types: [...input.types, e.target.value],
+              });
+              setErrors(validate({
+                ...input,
+                types: [...input.types, e.target.value],
+            })) 
+        } else if (!e.target.checked) {
+            setInput({
+                ...input,
+                types: input.types.filter((t) => t !== e.target.value),
+              });
+              setErrors(validate({
+                ...input,
+                types: input.types.filter((t) => t !== e.target.value),
+            })) 
         }
-    }
+
+}
 
     function handleSubmit(e){
         e.preventDefault();
@@ -108,7 +127,8 @@ export default function PokemonCreate() {
             !errors.speed &&
             !errors.height &&
             !errors.weight &&
-            !errors.sprite
+            !errors.sprite &&
+            !errors.types
         ) {
 
         dispatch(postPokemon(input));
@@ -132,12 +152,7 @@ export default function PokemonCreate() {
     }    
 }
 
-const handleDelete = (e) => {
-    setInput({
-        ...input,
-        types: input.types.filter(type => type !== e)
-    })
-}
+
     
     return(
         <div className={s.container}>
@@ -163,7 +178,7 @@ const handleDelete = (e) => {
                     type = "number"
                     value = {input.hp}
                     name = "hp"
-                    placeholder="1-100"
+                    placeholder="1-200"
                     onChange={(e)=> handleChange(e)}
                     />
                     <p className={s.p}>{errors.hp}</p>
@@ -174,7 +189,7 @@ const handleDelete = (e) => {
                     type = "number"
                     value = {input.defense}
                     name = "defense"
-                    placeholder="1-100"
+                    placeholder="1-200"
                     onChange={(e)=> handleChange(e)}
                     />
                     <p className={s.p}>{errors.defense}</p>
@@ -185,7 +200,7 @@ const handleDelete = (e) => {
                     type = "number"
                     value = {input.specialDefense}
                     name = "specialDefense"
-                    placeholder="1-100"
+                    placeholder="1-200"
                     onChange={(e)=> handleChange(e)}
                     />
                     <p className={s.p}>{errors.specialDefense}</p>
@@ -226,7 +241,7 @@ const handleDelete = (e) => {
                     value = {input.attack}
                     name = "attack"
                     onChange={(e)=> handleChange(e)}
-                    placeholder="1-100"
+                    placeholder="1-200"
                     />
                     <p className={s.p}>{errors.attack}</p>
                 </div>
@@ -238,7 +253,7 @@ const handleDelete = (e) => {
                     value = {input.specialAttack}
                     name = "specialAttack"
                     onChange={(e)=> handleChange(e)}
-                    placeholder="1-100"
+                    placeholder="1-200"
                     />
                     <p className={s.p}>{errors.specialAttack}</p>
                 </div>
@@ -249,7 +264,7 @@ const handleDelete = (e) => {
                     type = "number"
                     value = {input.speed}
                     name = "speed"
-                    placeholder="1-100"
+                    placeholder="1-200"
                     onChange={(e)=> handleChange(e)}
                     />
                     <p className={s.p}>{errors.speed}</p>
@@ -270,23 +285,28 @@ const handleDelete = (e) => {
                 </div>
                 
                 <div>
-                    <label className={s.label}> Select type </label>              
-                <select className={s.select} onChange={(e)=> handleSelect(e)}>
-                    {types?.map((ty)=>(
-                        <option value={ty.name}>{ty.name}</option>
-                    ))}
-                </select>
-                        {
-                            input.types.map(e =>{
-                                return (
-                                    <div className={s.typesSelect}>
-                                        <p className={s.pTypes}>{e}</p>
-                                        <button className={s.btnDelete} onClick={()=> {handleDelete(e)}}>x</button>
-                                    </div>
-                                )
-                            })
-                        }
-               
+                    <p className={s.label}> Select type</p>               
+             <div className={s.typesContainer}>
+                {types.map((t) => {
+                if (t.name !== "unknown" && t.name !== "shadow")
+                  return (
+                    <label key={t.name}>
+                      <input
+                        type="checkbox"
+                        value={t.name}
+                        onChange={(e) => handleChange(e, "checkbox")}
+                        name={t.name}
+                      />
+                    <div className={t.name}>
+                       
+                    </div>
+                      {/* {t.name} para que solo aparezcan los iconos */}
+                    </label>
+                  );
+                else return null;
+              })}
+                </div>
+                <p className={s.p}>{errors.types}</p>
                 </div>
                 <div>
                 <button className={s.btnCreate} type= "submit">Create</button>

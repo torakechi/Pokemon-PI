@@ -105,6 +105,7 @@
         visibility: hidden;
         width: 400px;
         text-align: center;
+        
     
       }
     
@@ -117,16 +118,27 @@
     /* termina la animacion     */
 
     
-    .card .content h2{
+    .name{
         color:black;
         font-size: 3em;
         text-transform: uppercase;
         line-height: 1em;
         -webkit-text-stroke: #fff 1px ;
         transform: translate(-100px,350px);
-       
+      
+        
       }
 
+    .id{
+      color:black;
+        font-size: 2em;
+        text-transform: uppercase;
+        line-height: 0.9em;
+        -webkit-text-stroke: #fff 1px ;
+        transform: translate(-100px,350px);
+        margin-top: -30px;
+    }
+   
     .statsContainer{
         color:black;
         display:flex;

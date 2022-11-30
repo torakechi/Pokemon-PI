@@ -5,7 +5,7 @@ const {pokeSearch, getPokemonApi, getPokeTypesApi,listTypes, getAll, pokeId} = r
 const {Pokemon, Type} = require("../db.js");
 
 
-// /pokemons/:id
+
 
 router.get("/:id", async (req, res)=>{
     const {id} = req.params;
@@ -14,38 +14,19 @@ router.get("/:id", async (req, res)=>{
         let pokemon = await pokeSearch(id);
         return res.json(pokemon);
     }catch(error){
-        return res.status(404).json(error.message);
-    }
+        return res.status(404).json("Pokemon Not Found");
+    }   
 }
 });
-
-// router.get('/:id', async (req,res) => {
-
-//     const { id } = req.params
-//     try {        
-//         let allPokemon = await getAll()
-//         let findPokemon = await allPokemon.find(e => e.id == id)
-            
-//         Object.keys(findPokemon).length ? 
-//         res.status(200).json(findPokemon) :
-//         res.status(404).send(`No existe ningun Pokemon con el id:${id}`)
-//     } catch (error) {
-//         console.log(error)
-//     }
-        
-// })
-
-// /pokemons?name
  
 router.get("/", async (req, res, next)=>{
     const {name} = req.query;  
     if(name){                  
         try{
-            let pokemon = await pokeSearch (name);
-            console.log(pokemon)
+            let pokemon = await pokeSearch (name, "name");
             return res.json(pokemon);
         }catch(error){
-            return res.status(404).json(error.message);
+            return res.status(404).json("Pokemon Not Found");
         }
     }
     next();
@@ -57,7 +38,7 @@ router.get("/", async (req,res)=>{
         const pokemons = await getAll();
         res.json(pokemons);
     }catch(error){
-        return res.status(404).json(error.message);
+        return res.status(404).json("Pokemon Not Found");
     }
 });
 

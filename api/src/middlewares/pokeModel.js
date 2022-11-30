@@ -46,7 +46,7 @@ return pokemonObj;
 };
 
 
-const pokeSearch = async (name) => {
+const pokeSearch = async (name, searchs) => {
     try{
         let search = await axios (`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`)
         
@@ -67,26 +67,38 @@ const pokeSearch = async (name) => {
     return infoPokemon;
 
     }catch(error){
-    let searchDb = await Pokemon.findAll({
-        include:
-            Type
-        }, 
-);
-    console.log(searchDb)
-    if (searchDb.length === 0) return new Error ("No se encontro el Pokemon");
-        // let infoPokemon = [{
-        //     id : searchDb.id,
-        //     name : searchDb.name,
-        //     sprite : searchDb.sprite,
-        //     hp: searchDb.hp,
-        //     attack: searchDb.attack,
-        //     defense: searchDb.defense,
-        //     specialAttack: searchDb.specialAttack,
-        //     specialDefense:searchDb.specialDefense,
-        //     speed: searchDb.speed,
-        //     height: searchDb.height,
-        //     weight: searchDb.weight,
-        //     type: searchDb.types.map(e=> e.type.name)}]
+    let searchDb
+    if (searchs === "name") {
+    searchDb = await Pokemon.findAll({
+        where:{name:name},
+        include:Type}, 
+)
+} else {
+    searchDb = await Pokemon.findAll({
+        where:{id:name},
+        include:Type}, 
+        )
+}     
+    
+    if (searchDb.length === 0) {
+        throw new Error ("Pokemon not found")
+    };
+    searchDb = searchDb[0].dataValues
+        let infoPokemon = [{
+        id : searchDb.id,
+        name : searchDb.name,
+        sprite : searchDb.sprite,
+        hp: searchDb.hp,
+        attack: searchDb.attack,
+        defense: searchDb.defense,
+        specialAttack: searchDb.specialAttack,
+        specialDefense:searchDb.specialDefense,
+        speed: searchDb.speed,
+        height: searchDb.height,
+        weight: searchDb.weight,
+        type: [searchDb.types[0].name, searchDb.types[1].name],
+        createdInDb: true}]
+        return infoPokemon;
     
 }
 };
@@ -117,8 +129,7 @@ const pokeId = async (id) => {
 };
 
 const getPokeTypesApi = async () =>{
-    let types = await axios ('https://pokeapi.co/api/v2/type'); // obtenemos los datos
-
+    let types = await axios ('https://pokeapi.co/api/v2/type'); 
     let urls = types.data.results.map((type)=>{
         return type.name;
     });

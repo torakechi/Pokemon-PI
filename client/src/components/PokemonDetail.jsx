@@ -24,7 +24,8 @@ export default function PokemonDetails(props){
                     <img className={s.img} src={myPokemon[0].sprite} alt= "img" width="260px" height="230px"/>
                     <div className={s.circle}></div>
                     <div className={s.content}>
-                    <h2 className={s.name}>{myPokemon[0].name} #{myPokemon[0].id}</h2>
+                    <h2 className={s.name}>{myPokemon[0].name}</h2>
+                    <h3 className={s.id}> # {myPokemon[0].id}</h3>
                     
                     <ul className={s.type}>
                     {
